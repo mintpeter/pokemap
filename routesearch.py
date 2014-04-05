@@ -3,6 +3,7 @@ from PIL import Image, ImageChops, ImageMath
 
 SPRITE_SIZE = 16
 
+# A rectangular patch of grass with height 16px
 class Patch:
     def __init__(self, x1, x2, y):
         self.x1 = x1
@@ -25,6 +26,8 @@ class Route:
 
         self.grass_patches = self.find_grass_patches
 
+    # Find the first patch of grass to determine if there is an offset to the
+    # grid
     def find_grass_start(self):
         for y1 in range(0, self.height - SPRITE_SIZE + 1):
             y2 = y1 + SPRITE_SIZE
@@ -36,6 +39,8 @@ class Route:
                 if sum(ImageMath.eval('int(diff)', diff=diff).histogram()) == 0:
                     return x1, y1
 
+    # Search for tall grass, beginning where find_grass_start() foudn the first
+    # patch
     def find_grass_patches(self):
         grass_patches = []
         x1, y1 = self.xstart, self.ystart
