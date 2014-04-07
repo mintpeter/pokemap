@@ -1,2 +1,5 @@
 *.swp
 *.pyc
+*.ini
+*.cfg
+*.sqlite
