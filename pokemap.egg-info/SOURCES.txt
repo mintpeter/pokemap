@@ -1,9 +1,6 @@
 CHANGES.txt
 MANIFEST.in
 README.txt
-development.ini
-production.ini
-setup.cfg
 setup.py
 pokemap/__init__.py
 pokemap/models.py
@@ -27,4 +24,9 @@ pokemap/static/pylons.css
 pokemap/static/pyramid-small.png
 pokemap/static/pyramid.png
 pokemap/static/transparent.gif
-pokemap/templates/mytemplate.pt
+pokemap/static/js/jquery-1.11.0.min.js
+pokemap/static/route/1.png
+pokemap/templates/404.mako
+pokemap/templates/base.mako
+pokemap/templates/home.mako
+pokemap/templates/map.mako
