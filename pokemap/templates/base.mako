@@ -5,19 +5,23 @@
     <script type="text/javascript" src="/static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('span').hide();
+            $('table.walk-encounters').hide();
             $('area.grass-patch').hover(showSpan,
                                         hideSpan);
         });
 
         function showSpan() {
-            $('span.' + $(this).attr('class')).show();
+//            $('div.' + $(this).attr('class')).show();
+            $('table.walk-encounters').show();
         }
 
         function hideSpan() {
-            $('span.' + $(this).attr('class')).hide();
+//            $('div.' + $(this).attr('class')).hide();
+            $('table.walk-encounters').hide();
         }
     </script>
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>

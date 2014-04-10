@@ -32,24 +32,27 @@ def view_map(request):
     gen_id = request.matchdict['gen_id']
     location_name = request.matchdict['route_name'].title()
 
+    c.gen_id = gen_id
+
+    c.location = PDSession.query(t.Location)\
+                    .filter(t.Location.name == location_name)\
+                    .join(t.Location.region)\
+                    .filter(t.Region.identifier == region_identifier)\
+                    .one()
+
+
     encounters = PDSession.query(t.Encounter)\
-                    .join(t.Encounter.slot)\
-                    .join(t.EncounterSlot.version_group)\
-                    .join(t.VersionGroup.generation)\
-                    .filter(t.Generation.id == gen_id)\
                     .join(t.Encounter.location_area)\
                     .join(t.LocationArea.location)\
                     .filter(t.Location.name == location_name)\
                     .join(t.Location.region)\
                     .filter(t.Region.identifier == region_identifier)\
+                    .join(t.Encounter.slot)\
+                    .join(t.EncounterSlot.version_group)\
+                    .join(t.VersionGroup.generation)\
+                    .filter(t.Generation.id == gen_id)\
                     .order_by(t.Encounter.version_id)
-
-#                    .join(t.Encounter.version)\ 
-#                    .join(t.VersionGroup.versions)\ 
-#                    .filter(t.VersionGroup.generation_id == gen_id)\
-    # Collapse redundant encounters
-
-
+    
     # Structure the pokemon that are going to be listed.
     # First, the method of encounter.
     # Second, the pokemon.
@@ -74,10 +77,16 @@ def view_map(request):
         if encounter.version not in c.versions:
             c.versions.append(encounter.version)
 
-    patches = DBSession.query(Patch).filter(Patch.routeid == 1).all()
+    patches = DBSession.query(Patch).filter(Patch.routeid == int(location_name.split(' ')[-1])).all()
 
     return {'patches': patches,
             'sorted_encounters': sorted_encounters}
+
+@view_config(route_name='patches', renderer='patches.mako')
+def view_patches(request):
+    patches = DBSession.query(Patch).all()
+
+    return {'patches': patches}
 
 @notfound_view_config(renderer='404.mako', append_slash=True)
 def not_found(request):
