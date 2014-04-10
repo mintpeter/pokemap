@@ -1,7 +1,9 @@
 from collections import defaultdict
 
+from pyramid import config as c
 from pyramid.response import Response
 from pyramid.view import view_config, notfound_view_config
+from pyramid.events import subscriber, BeforeRender
 
 from sqlalchemy import and_
 from sqlalchemy.exc import DBAPIError
@@ -16,6 +18,9 @@ import pokedex.db.tables as t
 
 PDSession = connect('sqlite:////home/zack/playground/pokemap/pokedex/pokedex/data/pokedex.sqlite')
 
+@subscriber(BeforeRender)
+def add_globals(event):
+    event['c'] = c
 
 @view_config(route_name='home', renderer='home.mako')
 def my_view(request):
@@ -23,29 +28,32 @@ def my_view(request):
 
 @view_config(route_name='map', renderer='map.mako')
 def view_map(request):
-    location_identifier = request.matchdict['route_identifier']
+    region_identifier = request.matchdict['region']
+    gen_id = request.matchdict['gen_id']
+    location_name = request.matchdict['route_name'].title()
 
-    location_area = PDSession.query(t.LocationArea).join(t.Location)\
-                    .filter(t.Location.identifier == location_identifier).first()
-#    encounters = PDSession.query(t.Encounter).join(t.Version)\
-#                    .filter(t.Version.version_group_id == 7)
-
-    encounters = PDSession.query(t.Encounter).join(t.Encounter.version)\
-                    .filter(t.Version.version_group_id == 7)\
+    encounters = PDSession.query(t.Encounter)\
+                    .join(t.Encounter.slot)\
+                    .join(t.EncounterSlot.version_group)\
+                    .join(t.VersionGroup.generation)\
+                    .filter(t.Generation.id == gen_id)\
                     .join(t.Encounter.location_area)\
                     .join(t.LocationArea.location)\
-                    .filter(t.Location.identifier == location_identifier)\
-#                    .join(t.Encounter.pokemon)\
-#                    .join(t.Encounter.slot)\
-#                    .join(t.EncounterSlot.method)
+                    .filter(t.Location.name == location_name)\
+                    .join(t.Location.region)\
+                    .filter(t.Region.identifier == region_identifier)\
+                    .order_by(t.Encounter.version_id)
 
+#                    .join(t.Encounter.version)\ 
+#                    .join(t.VersionGroup.versions)\ 
+#                    .filter(t.VersionGroup.generation_id == gen_id)\
     # Collapse redundant encounters
 
 
     # Structure the pokemon that are going to be listed.
     # First, the method of encounter.
-    # Second, the game version
-    # Third, the pokemon.
+    # Second, the pokemon.
+    # Third, the game version.
     # Finally, the frequency of the pokemon's occurrence.
     # Based on the original:
     # https://github.com/veekun/spline-pokedex/blob/master/splinext/pokedex/controllers/pokedex.py
@@ -55,7 +63,7 @@ def view_map(request):
                             )
                         )
 
-    versions = []
+    c.versions = []
 
     for encounter in encounters:
         sorted_encounters\
@@ -63,13 +71,12 @@ def view_map(request):
             [encounter.pokemon]\
             [encounter.version]\
             += encounter.slot.rarity
-        if encounter.version not in versions:
-            versions.append(encounter.version)
+        if encounter.version not in c.versions:
+            c.versions.append(encounter.version)
 
     patches = DBSession.query(Patch).filter(Patch.routeid == 1).all()
 
     return {'patches': patches,
-            'versions': versions,
             'sorted_encounters': sorted_encounters}
 
 @notfound_view_config(renderer='404.mako', append_slash=True)

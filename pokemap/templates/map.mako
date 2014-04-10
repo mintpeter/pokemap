@@ -28,7 +28,7 @@ Encounter Pokemon:
     <thead>
         <tr>
             <th>Pokemon</th>
-    %for version in versions:
+    %for version in c.versions:
             <th>${version.name}</th>
     %endfor
         </tr>
@@ -37,7 +37,7 @@ Encounter Pokemon:
     %for pokemon in sorted_encounters[method]:
         <tr>
             <td>${pokemon.name}</td>
-        %for version in sorted_encounters[method][pokemon]:
+        %for version in c.versions:
             <td>${sorted_encounters[method][pokemon][version]}%</td>
         %endfor
         </tr>
