@@ -4,3 +4,6 @@
 *.cfg
 *.sqlite
 *.egg-info/*
+pokemap/static/img/*
+pokemap/static/route/*
+*.db
