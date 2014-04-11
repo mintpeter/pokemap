@@ -3,14 +3,18 @@
 <img class="route" src="/static/route/${c.gen_id}/${c.location.identifier}.png" alt="Route 1" usemap="#route1">
 
 <map name="route1">
-%for patch in patches:
+%for patch_type in c.patches:
+    %for patch in c.patches[patch_type]:
     <area shape="rect" coords="${patch.x1},${patch.y1},${patch.x2},${patch.y2}"
-        class="grass-patch" alt="grass" href="#">
+        class="${patch_type.name}-encounters" href="#">
+    %endfor
 %endfor
 </map>
 
-%for method in sorted_encounters:
-<table class="${method.identifier}-encounters encounters">
+
+
+%for method in c.encounters:
+<table class="${filter(lambda x: x.encounter_method_id == method.id, c.patch_types)[0].name}-encounters encounters">
     <thead>
         <tr>
             <th colspan="999">${method.name}</th>
@@ -23,11 +27,11 @@
         </tr>
     </thead>
     <tbody>
-    %for pokemon in sorted_encounters[method]:
+    %for pokemon in c.encounters[method]:
         <tr>
             <td>${pokemon.name}</td>
         %for version in c.versions:
-            <td>${sorted_encounters[method][pokemon][version]}%</td>
+            <td>${c.encounters[method][pokemon][version]}%</td>
         %endfor
         </tr>
     %endfor

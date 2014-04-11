@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pok&eacute;map</title>
+    <title>Pok&eacute;map &mdash; ${self.title()}</title>
     <script type="text/javascript" src="/static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('table.walk-encounters').hide();
-            $('area.grass-patch').hover(showSpan,
+            $('table.encounters').hide();
+            $('area').hover(showSpan,
                                         hideSpan);
         });
 
         function showSpan() {
-//            $('div.' + $(this).attr('class')).show();
-            $('table.walk-encounters').show();
+            $('table.' + $(this).attr('class')).show();
         }
 
         function hideSpan() {
-//            $('div.' + $(this).attr('class')).hide();
-            $('table.walk-encounters').hide();
+            $('table.' + $(this).attr('class')).hide();
         }
     </script>
 
@@ -25,7 +23,7 @@
 </head>
 
 <body>
-
+    <h2><%block name="title"/></h2>
 ${next.body()}
 
 </body>
