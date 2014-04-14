@@ -1,7 +1,101 @@
+body {
+    font-size: 12px;
+    font-family: 'Roboto', Verdana, sans-serif;
+    margin: 0px;
+}
+
+header {
+    background: #2B1F33;
+    color: rgb(255, 255, 255);
+    padding: 20px 10px 10px;
+}
+
+header img {
+    width: 96px;
+    height: 96px;
+    float: left;
+}
+
+header h1 {
+    margin: 0px;
+}
+
+header p {
+    margin: 5px 106px;
+    font-style: italic;
+}
+
+nav {
+    background: #FBFF91;
+}
+
+nav ul {
+    margin: 0px;
+    padding: 5px;
+    list-style: none;
+}
+
+nav li {
+    display: inline;
+}
+
+nav a {
+    padding: 5px;
+    font-weight: bold;
+    color: #452237;
+}
+
+nav a:link {
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+#main {
+    display: block;
+}
+
 img.route {
     float: left;
 }
 
 table.encounters {
+    
+}
+
+table.encounters thead {
+    background: #FBFF91;
+}
+
+table.encounters th {
+    height: 24px;
+}
+
+table.encounters img {
+    vertical-align: middle;
+}
+
+table.encounters td, table.encounters th {
+    width: 200px;
+}
+
+
+#route-image {
     float: left;
+    min-width: 400px;
+    max-width: 1000px;
+    max-height: 600px;
+    overflow: auto;
+}
+
+footer {
+    padding: 10px;
+    background: #FBFF91;
+}
+
+
+.clear {
+    clear: both;
 }

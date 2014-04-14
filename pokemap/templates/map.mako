@@ -1,8 +1,12 @@
 <%inherit file="base.mako"/>
 
-<img class="route" src="/static/route/${c.gen_id}/${c.location.identifier}.png" alt="Route 1" usemap="#route1">
+<%block name="title">${c.location.name}</%block>
 
-<map name="route1">
+<div id="route-image">
+    <img class="route" src="/static/route/${c.gen_id}/${c.location.identifier}.png" alt="${c.location.identifier}" usemap="#route">
+</div>
+
+<map name="route">
 %for patch_type in c.patches:
     %for patch in c.patches[patch_type]:
     <area shape="rect" coords="${patch.x1},${patch.y1},${patch.x2},${patch.y2}"
@@ -17,19 +21,31 @@
 <table class="${filter(lambda x: x.encounter_method_id == method.id, c.patch_types)[0].name}-encounters encounters">
     <thead>
         <tr>
-            <th colspan="999">${method.name}</th>
+            <th colspan="999">
+                <img src="/img/method/${method.identifier}.png" alt="${method.identifier}">
+                <span>${method.name}</span>
+            </th>
         </tr>
         <tr>
-            <th>Pokemon</th>
+            <th>
+                <img src="/img/poke-ball.png" alt="poke-ball">
+                <span>Pokemon<span>
+            </th>
     %for version in c.versions:
-            <th>${version.name}</th>
+            <th>
+                <img src="/img/version/${version.identifier}.png" alt="${version.identifier}">
+                <span>${version.name}</span>
+            </th>
     %endfor
         </tr>
     </thead>
     <tbody>
     %for pokemon in c.encounters[method]:
         <tr>
-            <td>${pokemon.name}</td>
+            <td>
+                <img src="/img/pokemon/${pokemon.id}.png" alt="${pokemon.identifier}">
+                <span>${pokemon.name}</span>
+            </td>
         %for version in c.versions:
             <td>${c.encounters[method][pokemon][version]}%</td>
         %endfor

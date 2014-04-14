@@ -16,6 +16,8 @@ def main(global_config, **settings):
     config = Configurator(settings=settings)
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_static_view('css', 'static/css/', cache_max_age=3600)
+    config.add_static_view('js', 'static/js/')
+    config.add_static_view('img', 'static/img/')
     config.add_route('home', '/')
     config.add_route('patches', '/patches/')
     config.add_route('map', '/map/{region}/gen{gen_id}/{route_name}/')
