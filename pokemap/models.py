@@ -51,6 +51,10 @@ class Patch(Base):
         self.y1 = y1
         self.x2 = x2
         self.y2 = y2
+    
+    def __repr__(self):
+        return u'<Patch(x1={0.x1}, y1={0.y1}, x2={0.x2}, y2={0.y2})>'\
+                .format(self)
 
 class PatchType(Base):
     __tablename__ = 'patch_types'
