@@ -7,3 +7,4 @@
 pokemap/static/img/*
 pokemap/static/route/*
 *.db
+*.old
