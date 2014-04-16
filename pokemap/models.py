@@ -68,4 +68,24 @@ class PatchType(Base):
         self.encounter_method_id = encounter_method_id
         self.name = name
 
+class Route(Base):
+    __tablename__ = 'routes'
+    id = Column(Integer, primary_key=True)
+    generation_id = Column(Integer)
+    region_id = Column(Integer)
+    location_id = Column(Integer)
+    x1 = Column(Integer)
+    y1 = Column(Integer)
+    x2 = Column(Integer)
+    y2 = Column(Integer)
+
+    def __init__(self, generation_id, region_id, location_id, x1, y1, x2, y2):
+        self.generation_id = generation_id
+        self.region_id = region_id
+        self.location_id = location_id
+        self.x1 = x1
+        self.y1 = y1
+        self.x2 = x2
+        self.y2 = y2
+
 Patch.patch_type = relationship(PatchType, lazy='joined')

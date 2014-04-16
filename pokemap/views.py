@@ -13,13 +13,14 @@ from sqlalchemy.orm.exc import NoResultFound
 from .models import (
     DBSession,
     Patch,
-    PatchType
+    PatchType,
+    Route
     )
 
 from pokedex.db import connect
 import pokedex.db.tables as t
 
-PDSession = connect('sqlite:////home/zack/playground/pokemap/pokedex/pokedex/data/pokedex.sqlite')
+PDSession = connect()
 
 @subscriber(BeforeRender)
 def add_globals(event):
@@ -28,6 +29,30 @@ def add_globals(event):
 @view_config(route_name='home', renderer='home.mako')
 def my_view(request):
     return {'project': 'pokemap'}
+
+@view_config(route_name='world', renderer='world.mako')
+def view_world(request):
+    c.region_identifier = request.matchdict['region']
+    c.gen_id = request.matchdict['gen_id']
+
+    try:
+        region = PDSession.query(t.Region)\
+                    .filter(t.Region.identifier == c.region_identifier)\
+                    .one()
+    except NoResultFound:
+        raise exception_response(404)
+    
+    c.routes = DBSession.query(Route)\
+                .filter(Route.region_id == region.id)\
+                .all()
+
+    q = PDSession.query(t.Location)
+
+    for route in c.routes:
+        route.location = q.filter(t.Location.id == route.location_id).one()
+    
+    return {}
+
 
 @view_config(route_name='map', renderer='map.mako')
 def view_map(request):
@@ -47,6 +72,8 @@ def view_map(request):
     except NoResultFound:
         raise exception_response(404)
 
+    # TO DO: Adapt for safari zone areas, etc.
+    
     encounters = PDSession.query(t.Encounter)\
                     .join(t.Encounter.location_area)\
                     .join(t.LocationArea.location)\

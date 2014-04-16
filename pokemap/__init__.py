@@ -20,6 +20,7 @@ def main(global_config, **settings):
     config.add_static_view('img', 'static/img/')
     config.add_route('home', '/')
     config.add_route('patches', '/patches/')
+    config.add_route('world', '/world/{region}/gen{gen_id}')
     config.add_route('map', '/map/{region}/gen{gen_id}/{route_name}/')
     config.scan()
     return config.make_wsgi_app()
