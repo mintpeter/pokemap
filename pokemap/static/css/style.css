@@ -4,8 +4,9 @@ body {
     margin: 0px;
 }
 
+/* main layout */
 header {
-    background: #2B1F33;
+    background: #D8472D;
     color: rgb(255, 255, 255);
     padding: 20px 10px 10px;
 }
@@ -26,7 +27,7 @@ header p {
 }
 
 nav {
-    background: #FBFF91;
+    background: #FFF2E7;
 }
 
 nav ul {
@@ -55,7 +56,53 @@ nav a:hover {
 
 #main {
     display: block;
+    padding: 5px;
 }
+
+footer {
+    padding: 10px;
+    background: #FFF2E7;
+}
+
+h2, h3, h4, h5, h6 {
+    background: #69D2E7;
+    color: #FFF2E7;
+    padding: 3px 10px;
+    border: 1px solid #FFF2E7;
+    border-radius: 10px;
+}
+
+
+.clear {
+    clear: both;
+}
+
+/* home page -- home.mako */
+section.blurb {
+    margin: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #A7DBD8;
+    background: #FFF2E7;
+}
+
+/* displaying world maps -- world.mako */
+
+img.world {
+    float: left;
+}
+
+span.route {
+    font-size: 2em;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #A7DBD8;
+    background: #FFF2E7;
+    float: left;
+}
+
+/* displaying routes -- map.mako */
 
 img.route {
     float: left;
@@ -81,7 +128,6 @@ table.encounters td, table.encounters th {
     width: 200px;
 }
 
-
 #route-image {
     float: left;
     min-width: 400px;
@@ -90,12 +136,3 @@ table.encounters td, table.encounters th {
     overflow: auto;
 }
 
-footer {
-    padding: 10px;
-    background: #FBFF91;
-}
-
-
-.clear {
-    clear: both;
-}

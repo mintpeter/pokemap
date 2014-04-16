@@ -2,15 +2,19 @@
 
 <%block name="title">${c.location.name}</%block>
 
+<section class="blurb">
+    Hover over the route to see where you can encounter wild pokemon.
+</section>
+
 <div id="route-image">
-    <img class="route" src="/static/route/${c.gen_id}/${c.location.identifier}.png" alt="${c.location.identifier}" usemap="#route">
+    <img class="route" src="/img/route/${c.gen_id}/${c.location.identifier}.png" alt="${c.location.identifier}" usemap="#route">
 </div>
 
 <map name="route">
 %for patch_type in c.patches:
     %for patch in c.patches[patch_type]:
     <area shape="rect" coords="${patch.x1},${patch.y1},${patch.x2},${patch.y2}"
-        class="${patch_type.name}-encounters" href="#">
+        class="${patch_type.name}-encounters encounters" href="#">
     %endfor
 %endfor
 </map>
