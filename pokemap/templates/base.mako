@@ -1,7 +1,9 @@
+<%def name="title()"/>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Pok&eacute;map &mdash; <%block name="title"/></title>
+        <title>Pok&eacute;map &mdash; ${self.title()}</title>
 
         <script type="text/javascript" src="/js/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="/js/map-hover.js"></script>

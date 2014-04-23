@@ -1,6 +1,6 @@
 <%inherit file="base.mako"/>
 
-<%block name="title">${c.region_identifier.title()}</%block>
+<%def name="title()">${c.region_identifier.title()}</%def>
 
 <section class="blurb">
     Hover over the the map to see the route names. Click on a route to see more

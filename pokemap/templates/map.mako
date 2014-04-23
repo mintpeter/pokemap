@@ -1,6 +1,6 @@
 <%inherit file="base.mako"/>
 
-<%block name="title">${c.location.name}</%block>
+<%def name="title()">${c.location.name}</%def>
 
 <section class="blurb">
     Hover over the route to see where you can encounter wild pokemon.

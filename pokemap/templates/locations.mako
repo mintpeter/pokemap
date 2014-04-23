@@ -1,9 +1,12 @@
 <%inherit file="base.mako"/>
 
-<%block name="title">Locations</%block>
+<%def name="title()">Locations</%def>
 
-Select a game group:
+<section class="blurb">
+    Click on a game group to find the map you're looking for. Unfortunately,
+    FireRed and LeafGreen are the only games available now.
+</section>
+
 <ul>
-    <li><a href="/map/kanto/gen3">FireRed/LeafGreen</a></li>
-    <li><a href="/map/hoenn/gen3">Ruby/Sapphire/Emerald</a></li>
+    <li><a href="/world/kanto/gen3">FireRed/LeafGreen</a></li>
 </ul>

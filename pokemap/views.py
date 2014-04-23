@@ -27,8 +27,20 @@ def add_globals(event):
     event['c'] = c
 
 @view_config(route_name='home', renderer='home.mako')
-def my_view(request):
-    return {'project': 'pokemap'}
+def home(request):
+    return {}
+
+@view_config(route_name='locations', renderer='locations.mako')
+def locations(request):
+    return {}
+
+@view_config(route_name='about', renderer='about.mako')
+def about(request):
+    return {}
+
+@view_config(route_name='contact', renderer='contact.mako')
+def contact(request):
+    return {}
 
 @view_config(route_name='world', renderer='world.mako')
 def view_world(request):
@@ -58,7 +70,7 @@ def view_world(request):
 def view_map(request):
     region_identifier = request.matchdict['region']
     gen_id = request.matchdict['gen_id']
-    location_name = request.matchdict['route_name'].title()
+    location_name = request.matchdict['location_name'].title()
 
     c.gen_id = gen_id
 
@@ -126,12 +138,6 @@ def view_map(request):
             [patch.patch_type].append(patch)
 
     return {}
-
-@view_config(route_name='patches', renderer='patches.mako')
-def view_patches(request):
-    patches = DBSession.query(Patch).all()
-
-    return {'patches': patches}
 
 @notfound_view_config(renderer='404.mako', append_slash=True)
 def not_found(request):
